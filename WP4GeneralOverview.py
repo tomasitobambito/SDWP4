@@ -1,6 +1,6 @@
 from WP4Definitions import Transverse,Bearing,Axial,Axial1,Tension,Shear,Weight
 #Variables
-D_h = 0.028
+D_h = 0.02
 t = 0.001
 w = D_h + 0.002
 F_app = 326.7/4
@@ -15,16 +15,16 @@ K_a3 = lambda x : 1.6*x- 0.8 #Independent
 K_tr = lambda x : -0.4284*x*x + 1.5092*x #Independent
 
 #Properties Material Alu 2014-T651
-S_y = 276*10**6
-S_s = 207*10**6
-S_br1 = 386*10**6
-density = 2700
+# S_y = 276*10**6
+# S_s = 207*10**6
+# S_br1 = 386*10**6
+# density = 2700
 
 #Properties Material Steel 4130
-# S_y = 360*10**6
-# S_s = 337*10**6
-# S_br1 = 540*10**6
-# density = 7900
+S_y = 360*10**6
+S_s = 337*10**6
+S_br1 = 540*10**6
+density = 7900
 
 S_br2 = lambda a : K_b(w/2/D_h)*a/D_h*S_y
 
