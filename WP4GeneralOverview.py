@@ -1,7 +1,7 @@
 from WP4Definitions import Transverse,Bearing,Axial,Axial1,Tension,Shear,Weight
 #Variables
-D_h = 0.035
-t = 0.0065
+D_h = 0.028
+t = 0.001
 w = D_h + 0.002
 F_app = 326.7/4
 
@@ -15,14 +15,16 @@ K_a3 = lambda x : 1.6*x- 0.8 #Independent
 K_tr = lambda x : -0.4284*x*x + 1.5092*x #Independent
 
 #Properties Material Alu 2014-T651
-# S_y = 276*10**6
-# S_s = 207*10**6
-# S_br1 = 386*10**6
+S_y = 276*10**6
+S_s = 207*10**6
+S_br1 = 386*10**6
+density = 2700
 
 #Properties Material Steel 4130
-S_y = 360*10**6
-S_s = 337*10**6
-S_br1 = 540*10**6
+# S_y = 360*10**6
+# S_s = 337*10**6
+# S_br1 = 540*10**6
+# density = 7900
 
 S_br2 = lambda a : K_b(w/2/D_h)*a/D_h*S_y
 
@@ -35,11 +37,11 @@ h_av = lambda h_1,h_2,h_3,h_4 : 6/(3/h_1+1/h_2+1/h_3+1/h_4)
 #Iteration Variables
 error = 1
 SF = 2
-correction = 0.1
+correction = 0.01
 track = 1
 
 #Optimal width finder
-while abs(error) >= 0.01:
+while error >= 0.01 or error <= 0:
     P_t,SF_t = Tension(D_h, w, t, K_t, S_y, F_app)
     P_s,SF_s = Shear(D_h, w, t, K_s(w/2/D_h), S_s, F_app)
     P_b,SF_b = Bearing(D_h, t, K_b(w/2/D_h), S_br1, F_app)
@@ -64,7 +66,7 @@ while abs(error) >= 0.01:
 
 print('*'*24)
 print('Thickness: {} [mm]\nWidth: {} [mm]\nDiameter: {} [mm]'.format(t*10**3,round(w*10**3,3),D_h*10**3))
-print("Weight: {}[g]".format(round(Weight(w, D_h, t, 2800)*10**3,3)))
+print("Weight: {}[g]".format(round(Weight(w, D_h, t, density)*10**3,3)))
 print('*'*24)
 print('SF_t:{} | SF_s:{}\nSF_b:{} | SF_a:{} \nSF_tr:{} | S_bry:{}*E6'.format(round(SF_t,0),round(SF_s,0),round(SF_b,0),round(SF_a,0),round(SF_tr,0),round(S_br2(a(w,D_h))/10**6)))
 print('*'*24)

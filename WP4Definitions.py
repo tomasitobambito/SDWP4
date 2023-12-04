@@ -63,7 +63,7 @@ def Iterate(D_h,t,w,F_app,K_t,S_tu,S_su,S_bru,density,error = 1,SF = 2,correctio
     h_1 = h_4 = lambda h_2 :h_2 + 0.5*D_h*(2**0.5/2)
     h_av = lambda h_1,h_2,h_3,h_4 : 6/(3/h_1+1/h_2+1/h_3+1/h_4)
     #Optimal width finder
-    while abs(error) >= 0.01:
+    while error >= 0.01 or error <= 0:
         SF_t = Tension(D_h, w, t, K_t, S_tu, F_app)[1]
         SF_s = Shear(D_h, w, t, K_s(w/2/D_h), S_su, F_app)[1]
         SF_b = Bearing(D_h, t, K_br(w/2/D_h), S_bru, F_app)[1]
